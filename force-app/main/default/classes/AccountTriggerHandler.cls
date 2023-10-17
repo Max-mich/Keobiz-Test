@@ -37,6 +37,8 @@ public class AccountTriggerHandler {
 
         update updatedAccounts; // Mettre à jour les comptes
 
+        // Liste des contacts dont le statut d'activité a été mis à jour
+        List<Contact> contactsToUpdate = [SELECT Id, IsActive__c FROM Contact WHERE IsActive__c != null];
         // Appel à la classe d'API pour synchroniser les contacts
         ContactSyncAPI.syncContactStatus(contactsToUpdate);
     }

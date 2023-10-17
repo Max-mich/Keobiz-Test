@@ -11,17 +11,36 @@ public class ContactSyncAPI {
 
         String requestBody = JSON.serialize(contactUpdates);
 
-        // Appelez l'API de synchronisation en masse avec le requestBody
-        // Gérez les réponses et les erreurs de l'API conformément à votre configuration.
-
-        // Exemple d'appel d'API (à adapter à votre configuration) :
-        // Http http = new Http();
-        // HttpRequest request = new HttpRequest();
-        // request.setEndpoint('https://fxyozmgb2xs5iogcheotxi6hoa0jdhiz.lambda-url.eu-central-1.on.aws');
-        // request.setMethod('PATCH');
-        // request.setBody(requestBody);
-        // request.setHeader('Authorization', 'salesforceAuthToken');
-        // HttpResponse response = http.send(request);
-        // // Gérer la réponse HTTP ici
+         // Définir l'URL de l'API
+         String apiUrl = 'https://fxyozmgb2xs5iogcheotxi6hoa0jdhiz.lambda-url.eu-central-1.on.aws';
+         String authToken = 'salesforceAuthToken'; // Remplacez par votre jeton d'authentification
+ 
+         // Créer une instance de la classe Http
+         Http http = new Http();
+         HttpRequest request = new HttpRequest();
+ 
+         // Définir la méthode HTTP et l'URL
+         request.setEndpoint(apiUrl);
+         request.setMethod('PATCH');
+ 
+         // Définir le corps de la requête
+         request.setHeader('Content-Type', 'application/json');
+         request.setHeader('Authorization', authToken);
+         request.setBody(requestBody);
+ 
+         // Envoyer la requête HTTP
+         HttpResponse response = http.send(request);
+ 
+         // Gérer la réponse HTTP
+         if (response.getStatusCode() == 200) {
+             System.debug('La synchronisation des contacts a réussi.');
+             System.debug('Réponse de API : ' + response.getBody());
+         } else {
+             System.debug('La synchronisation des contacts a échoué.');
+             System.debug('Code de statut HTTP : ' + response.getStatusCode());
+             System.debug('Message erreur : ' + response.getStatus());
+         }
+ 
+        return response; // Vous pouvez retourner la réponse HTTP pour un traitement ultérieur si nécessaire.
     }
 }
