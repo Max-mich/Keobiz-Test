@@ -12,8 +12,8 @@ public class ContactSyncAPI {
         String requestBody = JSON.serialize(contactUpdates);
 
          // Définir l'URL de l'API
-         String apiUrl = 'https://fxyozmgb2xs5iogcheotxi6hoa0jdhiz.lambda-url.eu-central-1.on.aws';
-         String authToken = 'salesforceAuthToken'; // Remplacez par votre jeton d'authentification
+         String apiUrl = System.getenv('API_URL');
+         String authToken = System.getenv('API_TOKEN'); // Remplacez par votre jeton d'authentification
  
          // Créer une instance de la classe Http
          Http http = new Http();

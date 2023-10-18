@@ -1,15 +1,16 @@
 public class AccountTriggerHandler {
     public static void handleCancelledMissions(List<Account> updatedAccounts) {
         List<Contact> contactsToUpdate = new List<Contact>();
+        public static final String fieldCanceled = 'canceled';
 
         for (Account acc : updatedAccounts) {
-            if (acc.MissionStatus__c == 'canceled' && acc.MissionCanceledDate__c == null) {
+            if (acc.MissionStatus__c == fieldCanceled && acc.MissionCanceledDate__c == null) {
                 // Mettre à jour la date d'annulation
                 acc.MissionCanceledDate__c = Date.today();
             }
 
             // Vérifier le statut d'activité des contacts
-            if (acc.MissionStatus__c == 'canceled') {
+            if (acc.MissionStatus__c == fieldCanceled) {
                 List<AccountContactRelation> accountContactRelations = [SELECT ContactId FROM AccountContactRelation WHERE AccountId = :acc.Id];
                 Set<Id> contactIds = new Set<Id>();
 
