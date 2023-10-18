@@ -1,12 +1,13 @@
 public class ContactSyncAPI {
     public static void syncContactStatus(List<Contact> contacts) {
-        List<Map<String, Object>> contactUpdates = new List<Map<String, Object>>();
+    
+        List<WRP001_patchAccount> contactUpdates = new List<WRP001_patchAccount>();
 
         for (Contact contact : contacts) {
-            contactUpdates.add(new Map<String, Object>{
-                'id' => contact.Id,
-                'is_active' => contact.IsActive__c
-            });
+            WRP001_patchAccount account = new WRP001_patchAccount();
+            account.id = contact.Id;
+            account.is_active = contact.IsActive__c;
+            contactUpdates.add(account);
         }
 
         String requestBody = JSON.serialize(contactUpdates);
